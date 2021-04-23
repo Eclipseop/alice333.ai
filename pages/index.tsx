@@ -41,7 +41,7 @@ const index: React.FC = () => {
 						}}
 					>
 						<h1 className="text-4xl m-auto text-red-300 mb-1">
-							Alice333.ai
+							◮ʟɪᴄᴇ333
 						</h1>
 						<Entry url={url} onChange={setUrl} />
 					</div>
