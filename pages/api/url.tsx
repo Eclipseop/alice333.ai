@@ -32,13 +32,13 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
 
 		if (cache.rowCount > 0) {
 			res.json({
-				url: "https://alice333.ai/api/test" + cache.rows[0].uid,
+				url: "https://alice333.ai/api/url" + cache.rows[0].uid,
 			});
 			return;
 		}
 
 		client.query("INSERT INTO urls(url, uid) VALUES($1, $2)", [url, uid]);
-		res.json({ url: "https://alice333.ai/api/test" + uid });
+		res.json({ url: "https://alice333.ai/api/url" + uid });
 	} finally {
 		client.release();
 	}

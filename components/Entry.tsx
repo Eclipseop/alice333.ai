@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 interface Props {
 	url: string;
@@ -6,17 +7,30 @@ interface Props {
 }
 
 const Entry: React.FC<Props> = (props) => {
+	const click = async (url: string) => {
+		console.log(`Submitting ${url}`);
+		const res = (await axios.post("/api/url/url?=" + url)).data;
+		//todo maybe do some handling here l0l
+	};
+
 	return (
-		<div className="mx-auto">
+		<div className="flex mx-auto gap-1">
 			<input
 				type="text"
 				value={props.url}
 				autoComplete="off"
 				autoCapitalize="off"
 				autoCorrect="off"
-				className="rounded"
+				className="rounded w-50"
 				onChange={(event) => props.onChange(event.target.value)}
 			></input>
+
+			<button
+				className="bg-white rounded p-1"
+				onClick={() => click(props.url)}
+			>
+				Submit
+			</button>
 		</div>
 	);
 };
