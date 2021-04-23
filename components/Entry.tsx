@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import copy from "clipboard-copy";
 
 interface Props {
 	url: string;
@@ -12,6 +13,7 @@ const Entry: React.FC<Props> = (props) => {
 			console.log(`Submitting ${url}`);
 			const res = (await axios.post("/api/url?url=" + url)).data;
 			navigator.clipboard.writeText(res.url);
+			copy(url);
 			alert(res.url);
 		} catch (err) {
 			console.log(err);
