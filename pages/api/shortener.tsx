@@ -10,7 +10,7 @@ const regex = new RegExp(
 );
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	if (req.method !== "POST") {
+	if (req.method !== "GET") {
 		res.status(400).send("");
 		return;
 	}
@@ -20,20 +20,29 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		const uid = nanoid(6);
 		const url = req.query.url;
 
-		if (!url.match(regex)) {(
+		if (!url.match(regex)) {
 			res.status(400).send("Not a valid URL.");
 			return;
 		}
 
-    const cache = await client.query("SELECT * FROM URLS WHERE URL = ($1)", url);
-    if (cache.rowCount > 0) {
-      res.json({url: "https://alice333.ai/api/test" + cache.rows[0].uid});
-      return;
-    }
+		const cache = await client.query(
+			"SELECT * FROM URLS WHERE URL = ($1)",
+			url
+		);
 
-    await client.query("INSERT INTO urls(url, uid) VALUES($1, $2)", url, uid);
-    res.json({url: "https://alice333.ai/api/test" + uid})
+		if (cache.rowCount > 0) {
+			res.json({
+				url: "https://alice333.ai/api/test" + cache.rows[0].uid,
+			});
+			return;
+		}
 
+		await client.query(
+			"INSERT INTO urls(url, uid) VALUES($1, $2)",
+			url,
+			uid
+		);
+		res.json({ url: "https://alice333.ai/api/test" + uid });
 	} finally {
 		client.release();
 	}
