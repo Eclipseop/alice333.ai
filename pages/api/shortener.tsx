@@ -32,11 +32,7 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
 			return;
 		}
 
-		await client.query(
-			"INSERT INTO urls(url, uid) VALUES($1, $2)",
-			url,
-			uid
-		);
+		client.query("INSERT INTO urls(url, uid) VALUES($1, $2)", url, uid);
 		res.json({ url: "https://alice333.ai/api/test" + uid });
 	} finally {
 		client.release();
