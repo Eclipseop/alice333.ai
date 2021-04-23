@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Entry from "../components/Entry";
 import Head from "next/head";
-import Image from "next/image";
 
 const index: React.FC = () => {
 	const [url, setUrl] = useState("");
@@ -22,20 +21,22 @@ const index: React.FC = () => {
 				></meta>
 				<meta name="theme-color" content="#ff82ee"></meta>
 			</Head>
-			<div className="min-h-screen bg-pink-300">
+			<div
+				className="min-h-screen"
+				style={{
+					backgroundImage: "url('/astantine_crop_2.jpg')",
+					backgroundPositionX: "center",
+				}}
+			>
 				<div className="flex flex-col">
-					<h1 className="text-4xl mx-auto text-white mb-1">
+					<h1
+						className="text-4xl m-auto text-white mb-1"
+						style={{ marginTop: "50%" }}
+					>
 						Alice333.ai
 					</h1>
 					<Entry url={url} onChange={setUrl} />
 				</div>
-				<Image
-					src="/jason2_Transparent.png"
-					alt="bg image of alice"
-					width={1900}
-					height={2500}
-					className="opacity-50"
-				/>
 			</div>
 		</div>
 	);
