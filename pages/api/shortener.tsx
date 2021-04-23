@@ -9,12 +9,7 @@ const regex = new RegExp(
 	/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi
 );
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-	if (req.method !== "GET") {
-		res.status(400).send("");
-		return;
-	}
-
+const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
 	const client = await pool.connect();
 	try {
 		const uid = nanoid(6);
@@ -48,15 +43,25 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 };
 
-/*
-export default function personHandler({ query: { id } }, res) {
-  const filtered = people.filter((p) => p.id === id)
+const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
+	const client = await pool.connect();
+	try {
+		const data = await client.query("SELECT * from URLS where UID = ($1)", [
+			req.query.uid,
+		]);
+		const url = data.rows[0].url;
 
-  // User with id exists
-  if (filtered.length > 0) {
-    res.status(200).json(filtered[0])
-  } else {
-    res.status(404).json({ message: `User with id: ${id} not found.` })
-  }
-}
-*/
+		res.redirect(url);
+	} catch {
+		res.status(404).send("");
+	} finally {
+	}
+};
+
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+	if (req.method == "GET") {
+		handleGet(req, res);
+	} else {
+		handlePost(req, res);
+	}
+};
