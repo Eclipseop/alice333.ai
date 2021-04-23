@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Entry from "../components/Entry";
 import Head from "next/head";
+import Image from "next/image";
 
 const index: React.FC = () => {
 	const [url, setUrl] = useState("");
@@ -18,6 +19,13 @@ const index: React.FC = () => {
 					</h1>
 					<Entry url={url} onChange={setUrl} />
 				</div>
+				<Image
+					src="/jason2_Transparent.png"
+					alt="bg image of alice"
+					width={1900}
+					height={2500}
+					className="opacity-50"
+				/>
 			</div>
 		</div>
 	);

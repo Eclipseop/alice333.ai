@@ -19,7 +19,6 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
 		if (typeof url != "string") {
 			return;
 		}
-
 		if (!url.match(regex)) {
 			res.status(400).send("Not a valid URL.");
 			return;
@@ -32,37 +31,27 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
 
 		if (cache.rowCount > 0) {
 			res.json({
-				url: "https://alice333.ai/api/url" + cache.rows[0].uid,
+				url: "https://alice333.ai/api/" + cache.rows[0].uid,
 			});
 			return;
 		}
 
-		client.query("INSERT INTO urls(url, uid) VALUES($1, $2)", [url, uid]);
-		res.json({ url: "https://alice333.ai/api/url" + uid });
+		client.query("INSERT INTO urls(url, uid, clicks) VALUES($1, $2, $3)", [
+			url,
+			uid,
+			0,
+		]);
+
+		res.json({ url: "https://alice333.ai/api/" + uid });
 	} finally {
 		client.release();
 	}
 };
 
-const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
-	const client = await pool.connect();
-	try {
-		const data = await client.query("SELECT * from URLS where UID = ($1)", [
-			req.query.uid,
-		]);
-		const url = data.rows[0].url;
-
-		res.redirect(url);
-	} catch {
-		res.status(404).send("");
-	} finally {
-	}
-};
-
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	if (req.method == "GET") {
-		handleGet(req, res);
-	} else {
-		handlePost(req, res);
+	if (req.method !== "POST") {
+		res.status(400).send("Invalid HTTP Methods");
+		return;
 	}
+	handlePost(req, res);
 };
