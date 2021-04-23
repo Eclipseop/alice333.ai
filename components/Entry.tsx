@@ -8,9 +8,13 @@ interface Props {
 
 const Entry: React.FC<Props> = (props) => {
 	const click = async (url: string) => {
-		console.log(`Submitting ${url}`);
-		const res = (await axios.post("/api/url?url=" + url)).data;
-		alert(res.url);
+		try {
+			console.log(`Submitting ${url}`);
+			const res = (await axios.post("/api/url?url=" + url)).data;
+			alert(res.url);
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (
