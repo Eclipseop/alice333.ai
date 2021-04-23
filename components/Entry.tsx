@@ -13,7 +13,7 @@ const Entry: React.FC<Props> = (props) => {
 			console.log(`Submitting ${url}`);
 			const res = (await axios.post("/api/url?url=" + url)).data;
 			navigator.clipboard.writeText(res.url);
-			copy(url);
+			copy(res.url);
 			alert(res.url);
 		} catch (err) {
 			console.log(err);
