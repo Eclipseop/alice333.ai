@@ -18,6 +18,12 @@ const Entry: React.FC<Props> = (props) => {
 		}
 	};
 
+	const simulateClick = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === "Enter") {
+			click(props.url);
+		}
+	};
+
 	return (
 		<div className="flex mx-auto gap-1">
 			<input
@@ -28,6 +34,7 @@ const Entry: React.FC<Props> = (props) => {
 				autoCorrect="off"
 				className="rounded w-50 border-2"
 				onChange={(event) => props.onChange(event.target.value)}
+				onKeyDown={(e) => simulateClick(e)}
 			></input>
 
 			<button
