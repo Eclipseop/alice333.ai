@@ -14,6 +14,7 @@ const Entry: React.FC<Props> = (props) => {
 				autoComplete="off"
 				autoCapitalize="off"
 				autoCorrect="off"
+				className="rounded"
 				onChange={(event) => props.onChange(event.target.value)}
 			></input>
 		</div>
