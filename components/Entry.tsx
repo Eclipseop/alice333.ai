@@ -25,12 +25,12 @@ const Entry: React.FC<Props> = (props) => {
 				autoComplete="off"
 				autoCapitalize="off"
 				autoCorrect="off"
-				className="rounded w-50"
+				className="rounded w-50 border-2"
 				onChange={(event) => props.onChange(event.target.value)}
 			></input>
 
 			<button
-				className="bg-white rounded p-1"
+				className="bg-red-300 border-2 border-red-400 rounded p-1"
 				onClick={() => click(props.url)}
 			>
 				Submit

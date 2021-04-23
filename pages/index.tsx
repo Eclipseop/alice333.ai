@@ -26,16 +26,25 @@ const index: React.FC = () => {
 				style={{
 					backgroundImage: "url('/astantine_crop_2.jpg')",
 					backgroundPositionX: "center",
+					overflow: "hidden",
 				}}
 			>
-				<div className="flex flex-col">
-					<h1
-						className="text-4xl m-auto text-white mb-1"
-						style={{ marginTop: "50%" }}
+				<div>
+					<div
+						className="flex flex-col bg-white w-auto rounded p-2"
+						style={{
+							top: "45%",
+							left: "25%",
+							position: "absolute",
+							paddingBottom: "10px",
+							alignItems: "center",
+						}}
 					>
-						Alice333.ai
-					</h1>
-					<Entry url={url} onChange={setUrl} />
+						<h1 className="text-4xl m-auto text-red-300 mb-1">
+							Alice333.ai
+						</h1>
+						<Entry url={url} onChange={setUrl} />
+					</div>
 				</div>
 			</div>
 		</div>
