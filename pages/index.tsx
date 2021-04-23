@@ -10,7 +10,17 @@ const index: React.FC = () => {
 		<div>
 			<Head>
 				<title>Alice333.ai</title>
-				<meta name="og:title" content="Alice333.ai" key="title"></meta>
+				<meta
+					name="og:title"
+					content="Alice333.ai"
+					key="ogtitle"
+				></meta>
+				<meta
+					name="og:description"
+					content="artificial intelligence music generator. アリスの目を通して世界を見る 𝒸₈: lnₑπ(1,1/0,0)²"
+					key="ogdesc"
+				></meta>
+				<meta name="theme-color" content="#ff82ee"></meta>
 			</Head>
 			<div className="min-h-screen bg-pink-300">
 				<div className="flex flex-col">
