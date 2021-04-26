@@ -8,10 +8,23 @@ const pool = new Pool({ connectionString });
 const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     const client = await pool.connect();
     try {
-        const uid = nanoid(6);
         const { url } = req.query;
+        let { uid } = req.query;
 
-        if (typeof url !== 'string') {
+        if (typeof url !== 'string' || typeof uid !== 'string') {
+            return;
+        }
+
+        if (!uid || uid === '') {
+            console.log('no uid provided');
+            uid = nanoid(6);
+        }
+        console.log(uid);
+        // const randUid = nanoid(6);
+
+        const uidCheck = await client.query('SELECT * FROM urls WHERE uid = ($1)', [uid]);
+        if (uidCheck.rowCount > 0) {
+            res.status(400).send('UID already in system :/');
             return;
         }
 
@@ -39,7 +52,7 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== 'POST') {
         res.status(400).send('Invalid HTTP Methods');
         return;

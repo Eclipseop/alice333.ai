@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-use-before-define
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import copy from 'clipboard-copy';
 
@@ -10,9 +10,11 @@ interface Props {
 }
 
 const Entry: React.FC<Props> = (props: Props) => {
+    const [uid, setUid] = useState('');
+
     const click = async (url: string) => {
         try {
-            const res = (await axios.post(`/api/url?url=${url}`)).data;
+            const res = (await axios.post(`/api/url?url=${url}&uid=${uid}`)).data;
             navigator.clipboard.writeText(res.url);
             copy(res.url);
             alert(res.url);
@@ -28,26 +30,37 @@ const Entry: React.FC<Props> = (props: Props) => {
     };
 
     return (
-        <div className="flex mx-auto gap-1">
+        <div className="flex flex-wrap mx-auto gap-1 max-w-xl">
+            <div className="min-w-full flex gap-1">
+                <input
+                    type="text"
+                    // eslint-disable-next-line react/destructuring-assignment
+                    value={props.url}
+                    autoComplete="off"
+                    autoCapitalize="off"
+                    autoCorrect="off"
+                    className="rounded border-2 flex-auto p-1"
+                    placeholder="http:///www.google.com"
+                    onChange={(event) => props.onChange(event.target.value)}
+                    onKeyDown={(e) => simulateClick(e)}
+                />
+
+                <button
+                    type="submit"
+                    className="bg-red-300 border-2 border-red-400 rounded p-1"
+                    onClick={() => click(props.url)}
+                >
+                    Submit
+                </button>
+            </div>
+
             <input
                 type="text"
-                // eslint-disable-next-line react/destructuring-assignment
-                value={props.url}
-                autoComplete="off"
-                autoCapitalize="off"
-                autoCorrect="off"
-                className="rounded w-50 border-2"
-                onChange={(event) => props.onChange(event.target.value)}
-                onKeyDown={(e) => simulateClick(e)}
+                placeholder="UID"
+                className="rounded border-2 flex-auto p-1"
+                value={uid}
+                onChange={(e) => setUid(e.target.value)}
             />
-
-            <button
-                type="submit"
-                className="bg-red-300 border-2 border-red-400 rounded p-1"
-                onClick={() => click(props.url)}
-            >
-                Submit
-            </button>
         </div>
     );
 };

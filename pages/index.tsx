@@ -32,13 +32,13 @@ const index: React.FC = () => {
                     overflow: 'hidden',
                 }}
             >
-                <div>
+                <div className=" min-w-full">
                     <div
-                        className="flex flex-col bg-white w-auto rounded p-2"
+                        className="flex flex-col bg-white mx-auto rounded p-2"
                         style={{
-                            top: '45%',
-                            left: '25%',
-                            position: 'absolute',
+                            marginTop: '20%',
+                            position: 'relative',
+                            width: '50%',
                             paddingBottom: '10px',
                             alignItems: 'center',
                         }}
@@ -47,6 +47,15 @@ const index: React.FC = () => {
                             ◮ʟɪᴄᴇ333
                         </h1>
                         <Entry url={url} onChange={setUrl} />
+                    </div>
+                    <div className="flex flex-row absolute bottom-0 min-w-full">
+                        <a href="https://www.patreon.com/bePatron?u=40510225" className="flex-grow">Patreon</a>
+                        <img
+                            src="alice_icon.png"
+                            className="rounded-full border-2 flex-none"
+                            alt="Alice popup icon"
+                            width="100px"
+                        />
                     </div>
                 </div>
             </div>
