@@ -4,9 +4,11 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
 import Entry from '../components/Entry';
+import Socials from '../components/Socials';
 
 const index: React.FC = () => {
     const [url, setUrl] = useState('');
+    const [visible, setVisible] = useState(false);
 
     return (
         <div>
@@ -32,7 +34,8 @@ const index: React.FC = () => {
                     overflow: 'hidden',
                 }}
             >
-                <div className=" min-w-full">
+                <div className="min-w-full">
+                    <Socials visible={visible} setVis={setVisible} />
                     <div
                         className="flex flex-col bg-white mx-auto rounded p-2"
                         style={{
@@ -48,15 +51,15 @@ const index: React.FC = () => {
                         </h1>
                         <Entry url={url} onChange={setUrl} />
                     </div>
-                    <div className="flex flex-row absolute bottom-0 min-w-full">
-                        <a href="https://www.patreon.com/bePatron?u=40510225" className="flex-grow">Patreon</a>
-                        <img
-                            src="alice_icon.png"
-                            className="rounded-full border-2 flex-none"
-                            alt="Alice popup icon"
-                            width="100px"
-                        />
-                    </div>
+                    <input
+                        type="image"
+                        src="alice_icon.png"
+                        className="rounded-full border-2 absolute bottom-0 right-0"
+                        alt="Alice popup icon"
+                        width="100px"
+                        style={{ transform: 'scaleX(-1)' }}
+                        onClick={() => setVisible(true)}
+                    />
                 </div>
             </div>
         </div>
