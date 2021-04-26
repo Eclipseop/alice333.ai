@@ -8,8 +8,7 @@ const pool = new Pool({ connectionString });
 const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     const client = await pool.connect();
     try {
-        const { url } = req.query;
-        let { uid } = req.query;
+        let { url, uid } = req.query;
 
         if (typeof url !== 'string' || typeof uid !== 'string') {
             return;
@@ -20,13 +19,17 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
             uid = nanoid(6);
         }
         console.log(uid);
-        // const randUid = nanoid(6);
 
         const uidCheck = await client.query('SELECT * FROM urls WHERE uid = ($1)', [uid]);
         if (uidCheck.rowCount > 0) {
             res.status(400).send('UID already in system :/');
             return;
         }
+
+        if (url.startsWith('http') && !url.startsWith('https')) {
+            url = url.replace('http', 'https');
+        }
+        console.log(url);
 
         const cache = await client.query(
             'SELECT * FROM URLS WHERE URL = ($1)',
