@@ -41,7 +41,7 @@ const index: React.FC = () => {
                         style={{
                             marginTop: '20%',
                             position: 'relative',
-                            width: '50%',
+                            width: 'fit-content',
                             paddingBottom: '10px',
                             alignItems: 'center',
                         }}
