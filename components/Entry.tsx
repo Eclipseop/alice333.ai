@@ -14,6 +14,13 @@ const Entry: React.FC<Props> = (props: Props) => {
 
     const click = async (url: string) => {
         try {
+            if (!url || url === '') {
+                if (uid !== '') {
+                    window.open(`/api/${uid}`);
+                }
+                return;
+            }
+
             const res = (await axios.post(`/api/url?url=${url}&uid=${uid}`)).data;
             navigator.clipboard.writeText(res.url);
             copy(res.url);

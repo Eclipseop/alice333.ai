@@ -10,10 +10,9 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         let { url, uid } = req.query;
 
-        if (typeof url !== 'string' || typeof uid !== 'string') {
+        if (typeof url !== 'string' || (uid && typeof uid !== 'string')) {
             return;
         }
-
         if (!uid || uid === '') {
             console.log('no uid provided');
             uid = nanoid(6);
