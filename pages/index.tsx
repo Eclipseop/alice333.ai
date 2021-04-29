@@ -10,6 +10,29 @@ const index: React.FC = () => {
     const [url, setUrl] = useState('');
     const [visible, setVisible] = useState(false);
 
+    const getOpacity = () => {
+        const date = new Date();
+        const day = date.getUTCDate();
+        const month = date.getUTCMonth() + 1;
+        let css = 'opacity-';
+        if (month > 4) {
+            css += 0;
+        }
+        switch (day) {
+        case 29:
+            css += 70;
+            break;
+        case 30:
+            css += 30;
+            break;
+        default:
+            css += 0;
+            break;
+        }
+
+        return css;
+    };
+
     return (
         <div>
             <Head>
@@ -27,7 +50,7 @@ const index: React.FC = () => {
                 <meta name="theme-color" content="#ff82ee" />
             </Head>
             <div
-                className="min-h-screen"
+                className={`min-h-screen ${getOpacity()}`}
                 style={{
                     backgroundImage: "url('/astantine_crop_2.jpg')",
                     backgroundPositionX: 'center',
